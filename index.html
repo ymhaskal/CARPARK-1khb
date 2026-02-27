@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CARPARK — 1KHB Theatre Group</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --red: #e63b2e; --black: #080808; --white: #f5f2ed; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Space Mono', monospace; font-size: 14px; line-height: 1.5; cursor: crosshair; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(8,8,8,0.92); backdrop-filter: blur(6px);
+    }
+    .nav-company { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--white); text-decoration: none; transition: color 0.2s; }
+    .nav-company:hover { color: var(--red); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); text-decoration: none; transition: color 0.2s; opacity: 0.6; }
+    .nav-links a:hover { color: var(--red); opacity: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; padding-top: 5.5rem; overflow: hidden;
+    }
+    .hero-top {
+      width: 100%; padding: 0.5rem 2.5rem 0.5rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 17vw, 19rem);
+      font-weight: 400; line-height: 1; letter-spacing: 0.04em;
+      color: var(--red); white-space: nowrap;
+      -webkit-text-stroke: 3px var(--red);
+      paint-order: stroke fill;
+      text-shadow: 4px 4px 0px rgba(0,0,0,0.6), 0 0 100px rgba(230,59,46,0.2);
+    }
+    .hero-sub {
+      font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--white); margin-top: 1rem; font-weight: 700;
+    }
+
+    /* HERO SPLIT */
+    .hero-split {
+      width: 100%; display: grid; grid-template-columns: 1fr 1fr;
+      flex: 1; margin-top: 0.75rem;
+    }
+    .hero-photo-wrap {
+      min-height: 520px; height: 100%;
+    }
+    .hero-photo-wrap.drop-zone { min-height: 520px; height: 100%; }
+    .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.82) contrast(1.08) brightness(0.97); }
+    .hero-photo-wrap .placeholder { min-height: 520px; }
+
+    .hero-info {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 3rem 3.5rem; text-align: left; border-left: 1px solid #1c1c1c;
+    }
+    .hero-info .info-row {
+      border-top: 1px solid #1c1c1c; padding: 0.9rem 0;
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .hero-info .info-row:last-of-type { border-bottom: 1px solid #1c1c1c; margin-bottom: 2rem; }
+    .info-key { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); }
+    .info-val { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); font-weight: 700; }
+
+    .btn {
+      display: inline-block; padding: 0.75rem 1.8rem;
+      border: 1px solid var(--red); color: var(--red); text-decoration: none;
+      font-family: 'Space Mono', monospace; font-size: 0.58rem;
+      letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.2s, color 0.2s;
+      align-self: flex-start;
+    }
+    .btn:hover { background: var(--red); color: var(--black); }
+
+    /* CALLOUT BAR */
+    .callout-bar {
+      background: var(--red); color: var(--black);
+      padding: 1.3rem 2.5rem; display: flex; align-items: center;
+      justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .callout-bar span { font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: 0.1em; }
+    .callout-dot { width: 4px; height: 4px; background: rgba(0,0,0,0.35); border-radius: 50%; flex-shrink: 0; }
+
+    /* ABOUT */
+    .about {
+      padding: 3rem 2.5rem 2rem; display: grid; grid-template-columns: 1fr 1.3fr;
+      gap: 5rem; max-width: 1200px; margin: 0 auto; align-items: start;
+    }
+    .section-label { font-size: 0.52rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--red); margin-bottom: 1.8rem; display: block; }
+    .about-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 400; letter-spacing: 0.04em; line-height: 0.9; text-transform: uppercase; color: var(--white); }
+    .about-title .red { color: var(--red); }
+    .about-body { font-size: 0.8rem; color: var(--white); line-height: 1.9; margin-bottom: 2.5rem; }
+    .detail-row { border-top: 1px solid #242424; padding: 1.1rem 0; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+    .detail-row:last-child { border-bottom: 1px solid #242424; }
+    .detail-key { font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white); opacity: 0.45; flex-shrink: 0; }
+    .detail-val { font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); text-align: right; font-weight: 700; }
+    .detail-val.red { color: var(--red); }
+    .detail-val a { color: inherit; text-decoration: none; }
+    .detail-val a:hover { text-decoration: underline; }
+
+    /* GALLERY */
+    .gallery-section { padding: 2rem 2.5rem 6rem; border-top: 1px solid #151515; }
+    .gallery-label { font-size: 0.52rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--white); opacity: 0.4; margin-bottom: 2rem; display: block; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #111; }
+    .gallery-item { overflow: hidden; aspect-ratio: 4/5; background: #0e0e0e; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.8) contrast(1.05); transition: filter 0.4s, transform 0.5s; }
+    .gallery-item:hover img { filter: saturate(1.0) contrast(1.08); transform: scale(1.04); }
+    .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.52rem; color: #2a2a2a; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; line-height: 2; }
+
+    /* FOOTER */
+    footer { padding: 2rem 2.5rem; border-top: 1px solid #151515; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer, footer a { font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); opacity: 0.4; text-decoration: none; }
+    footer a:hover { color: var(--red); opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .hero-split { grid-template-columns: 1fr; }
+      .hero-info { border-left: none; border-top: 1px solid #1c1c1c; padding: 2rem 1.5rem; }
+      .hero-photo-wrap, .hero-photo-wrap.drop-zone { min-height: 60vw; }
+      .callout-bar { gap: 1rem; padding: 1rem 1.5rem; }
+      .callout-bar span { font-size: 1.1rem; }
+      .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      .gallery-section { padding: 3rem 1.5rem 4rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:last-child { display: none; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://www.instagram.com/1khb.group/" target="_blank" class="nav-company">1KHB Theatre Group</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-top">
+      <h1 class="hero-title">CARPARK</h1>
+      <p class="hero-sub">A play in a car &nbsp;·&nbsp; One actor &nbsp;·&nbsp; Four audience members</p>
+    </div>
+
+    <div class="hero-split">
+      <!-- LEFT: photo -->
+      <div class="hero-photo-wrap">
+        <img src="hero-car.jpg" alt="Yael Haskal — CARPARK" style="filter:saturate(0.82) contrast(1.08) brightness(0.97);" />
+      </div>
+
+      <!-- RIGHT: info -->
+      <div class="hero-info">
+        <div class="info-row">
+          <span class="info-key">Written + Directed</span>
+          <span class="info-val">Timothy George Kelly</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Starring</span>
+          <span class="info-val">Yael Haskal</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Company</span>
+          <span class="info-val">1KHB Theatre Group</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Capacity</span>
+          <span class="info-val">4 audience members per show</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Duration</span>
+          <span class="info-val">70 minutes</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Location</span>
+          <span class="info-val">Provided upon ticket purchase</span>
+        </div>
+        <a href="#tickets" class="btn">More dates coming soon</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="callout-bar">
+    <span>A Play In A Car</span>
+    <div class="callout-dot"></div>
+    <span>One Actor</span>
+    <div class="callout-dot"></div>
+    <span>Four Audience Members</span>
+    <div class="callout-dot"></div>
+    <span>70 Minutes</span>
+  </div>
+
+  <section class="about" id="about">
+    <div>
+      <span class="section-label">The Show</span>
+      <h2 class="about-title">The<br><span class="red">Car</span><br>Is The<br>Stage</h2>
+    </div>
+    <div id="tickets">
+      <p class="about-body">
+        Part auto-theatre, part confessional, CARPARK is a solo performance staged inside a parked car. Created by Timothy George Kelly and performed by Yael Haskal, CARPARK invites four audience members at a time into a darkly funny, emotionally unfiltered journey through identity, disconnection, and longing in the age of the endless stream.
+      </p>
+    </div>
+  </section>
+
+  <section class="gallery-section" id="archive">
+    <span class="gallery-label">Past showings — poster archive</span>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="poster-janfeb.jpg" alt="CARPARK — 27 Jan to 1 Feb" />
+      </div>
+      <div class="gallery-item">
+        <img src="poster-june.jpg" alt="CARPARK — 18–22 June" />
+      </div>
+      <div class="gallery-item">
+        <img src="poster-sept.jpg" alt="CARPARK — 20–24 Sept" />
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 1KHB Theatre Group</span>
+    <a href="/cdn-cgi/l/email-protection#325a575e5e5d7203595a501c515d5f"><span class="__cf_email__" data-cfemail="3a525f5656557a0b51525814595557">[email&#160;protected]</span></a>
+    <a href="https://www.instagram.com/1khb.group/" target="_blank">@1khb.group</a>
+  </footer>
+
+</body>
+</html>
